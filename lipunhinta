@@ -1,0 +1,89 @@
+package com.example.lipunhinta;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.CheckBox;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemSelectedListener;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+
+
+
+
+public class MainActivity extends AppCompatActivity {
+    private EditText ikätext;
+    private TextView vastaus;
+    private Button nappi;
+    private CheckBox chekki;
+    private Spinner spinneri;
+    private TextView spinnertext;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        ikätext = findViewById(R.id.edittext);
+        vastaus = findViewById(R.id.result);
+        nappi = findViewById(R.id.button);
+        chekki = findViewById(R.id.checkBox);
+        spinneri = findViewById(R.id.spinner);
+        spinnertext = findViewById(R.id.textView);
+
+        String[] vaihtoehdot = {
+                "Valitse paikka", "elokuvateatteri", "teatteri", "kahvila"
+        };
+        nappi.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int num1 = Integer.parseInt(ikätext.getText().toString());
+
+                double alennus;
+                if (chekki.isChecked()) {
+                    alennus = 0.75;
+
+                } else {
+                    alennus = 1;
+                }
+
+                if (num1 <= 18 || num1 >= 65) {
+
+                    vastaus.setText(String.valueOf(5 * alennus + " €"));
+                } else {
+                    vastaus.setText(String.valueOf(10 * alennus + " €"));
+                }
+            }
+        });
+
+        ArrayAdapter<String> adapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, vaihtoehdot);
+
+        spinneri.setAdapter(adapter);
+        spinneri.setOnItemSelectedListener(new MyItemSelectedListener());
+    }
+
+    class MyItemSelectedListener implements OnItemSelectedListener {
+        @Override
+        public void onItemSelected(AdapterView<?> adapterView, View view, int position, long id) {
+            if (position == 0) {
+                spinnertext.setText("Et ole valinnut paikkaa.");
+            } else {
+                spinnertext.setText(adapterView.getItemAtPosition(position).toString());
+            }
+        }
+
+        @Override
+        public void onNothingSelected(AdapterView<?> adapterView) {
+
+        }
+    }
+}
+
+
