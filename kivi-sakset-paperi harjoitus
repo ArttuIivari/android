@@ -1,0 +1,234 @@
+package com.example.kivisaksetpaperiharjoitus;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.os.Bundle;
+import android.widget.Button;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
+import android.view.View;
+
+import java.util.Random;
+
+public class MainActivity extends AppCompatActivity {
+    RadioGroup radioryhma;
+    RadioButton rnappi1;
+    RadioButton rnappi2;
+    RadioButton rnappi3;
+    TextView result;
+    Button generate;
+    int kayttajaluku = 5;
+    String tietokonevalinta = "";
+    String kayttajavalinta;
+    int tietokoneluku;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        final Random myRandom = new Random();
+
+        generate = (Button)findViewById(R.id.nappi);
+        result = (TextView)findViewById(R.id.vastaus);
+        radioryhma = (RadioGroup)findViewById(R.id.radioGroup);
+        rnappi1 = (RadioButton) findViewById(R.id.radionappi);
+        rnappi2 = (RadioButton)findViewById(R.id.radionappi2);
+        rnappi3 = (RadioButton)findViewById(R.id.radionappi3);
+
+        generate.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v) {
+
+                tietokoneluku = myRandom.nextInt(3);
+
+                if (tietokoneluku == 0){
+                    tietokonevalinta = "Kivi";
+                }
+                else if (tietokoneluku == 1){
+                    tietokonevalinta = "Sakset";
+                }
+                else if (tietokoneluku == 2){
+                    tietokonevalinta = "Paperi";
+                }
+
+                //int radioId = radioryhma.getCheckedRadioButtonId();
+                //rnappi = findViewById(radioId);
+                //kayttajavalinta = String.valueOf(rnappi.getText());
+
+
+                if (rnappi1.isChecked()){
+                    kayttajaluku = 0;//kivi
+                }
+                else if (rnappi2.isChecked()){
+                    kayttajaluku = 1;//sakset
+                }
+                else if (rnappi3.isChecked()){
+                    kayttajaluku = 2;//paperi
+                }
+                //result.setText(String.valueOf(kayttajaluku));
+                if (kayttajaluku == 0 && tietokoneluku == 1){//kivi-sakset
+                    result.setText("Voitit, tietokoneella oli " + tietokonevalinta);
+                }
+                else if (kayttajaluku == 1 && tietokoneluku == 2){//sakset-paperi
+                    result.setText("Voitit, tietokoneella oli " + tietokonevalinta);
+                }
+                else if (kayttajaluku == 2 && tietokoneluku == 0){//paperi-kivi
+                    result.setText("Voitit, tietokoneella oli " + tietokonevalinta);
+                }
+                else if (kayttajaluku == 0 && tietokoneluku == 2){//kivi-paperi
+                    result.setText("Hävisit, tietokoneella oli " + tietokonevalinta);
+                }
+                else if (kayttajaluku == 2 && tietokoneluku == 1){//paperi-sakset
+                    result.setText("Hävisit, tietokoneella oli " + tietokonevalinta);
+                }
+                else if (kayttajaluku == 1 && tietokoneluku == 0){//sakset-kivi
+                    result.setText("Hävisit, tietokoneella oli " + tietokonevalinta);
+                }
+
+
+
+
+                else if (kayttajaluku == 0 && tietokoneluku == 0){
+                    result.setText("Tasapeli!");
+                }
+                else if (kayttajaluku == 1 && tietokoneluku == 1){
+                    result.setText("Tasapeli!");
+                }
+                else if (kayttajaluku == 2 && tietokoneluku == 2){
+                    result.setText("Tasapeli!");
+                }
+
+
+
+
+
+                else {
+                    result.setText("1");
+                }
+
+
+                /*if (kayttajavalinta == "Kivi" && tietokonevalinta == "Sakset"){
+                    result.setText("123");
+                }*/
+
+                //result.setText(rnappi.getText());
+                //result.setText(tietokonevalinta);
+
+                //result.setText(String.valueOf(arvottuluku));
+            }
+        });
+
+    }
+
+    /*public void checkButton(View v) {
+        int radioId = radioryhma.getCheckedRadioButtonId();
+
+        rnappi = findViewById(radioId);
+
+
+    }*/
+}
+
+
+
+
+
+
+
+
+
+
+
+
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:layout_marginBottom="150dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <RadioButton
+            android:id="@+id/radionappi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Kivi" />
+
+        <RadioButton
+            android:id="@+id/radionappi2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+
+            android:text="Sakset" />
+
+        <RadioButton
+            android:id="@+id/radionappi3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:text="Paperi" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+
+        android:layout_alignParentBottom="true"
+        android:text="Pelaa kivi-sakset-paperia!"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.22" />
+
+    <Button
+        android:id="@+id/nappi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="250dp"
+        android:text="Pelaa"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/vastaus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="75dp"
+        android:text="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
